@@ -1,3 +1,6 @@
+  /* Zadatak: proveriti da li osoba poseduje privatni ključ za zadati javni ključ,
+  bez otkrivanja privatnog ključa */
+
 pragma circom 2.1.6;
 
 include "circomlib/comparators.circom";
