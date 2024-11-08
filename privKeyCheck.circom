@@ -8,21 +8,21 @@ template PrivateKeyCheck () {
     signal input pub_key[2];
     signal output answer;
 
-    /* templejt BabyPbk kao ulaznu vrednost uzima privatni kljuc k, a kao izlaz daje public key na Baby Jub Jub krivoj K=k*G.
-    Generator Baby Jub Jub krive je tačka G=(5299619240641551281634865583518297030282874472190772894086521144482721001553,
+    /* templejt BabyPbk kao ulaznu vrednost uzima privatni kljuc k, a kao izlaz daje public key K=k*G, gde je G
+    generator tačka Baby Jubjub krive, G=(5299619240641551281634865583518297030282874472190772894086521144482721001553,
     16950150798460657717958625567821834550301663161624707787222815936182638968203) */
     component public_key = BabyPbk();
     public_key.in <== priv_key;
-    component prvakoordinata = IsEqual();
-    prvakoordinata.in[0] <== public_key.Ax;
-    prvakoordinata.in[1] <== pub_key[0];
-    component drugakoordinata = IsEqual();
-    drugakoordinata.in[0] <== public_key.Ay;
-    drugakoordinata.in[1] <== pub_key[1];
+    component provera1 = IsEqual();
+    provera1.in[0] <== public_key.Ax;
+    provera1.in[1] <== pub_key[0];
+    component provera2 = IsEqual();
+    provera2.in[0] <== public_key.Ay;
+    provera2.in[1] <== pub_key[1];
 
     /* ako se obe koordinate poklapaju, onda je izlaz oba poredjenja 1, pa ce i answer biti 1.
     Ako se bar jedna komponenta ne poklapa, onda ce answer biti 0 */
-    answer <== prvakoordinata.out * drugakoordinata.out;
+    answer <== provera1.out * provera2.out;
 }
 
 component main { public [pub_key] } = PrivateKeyCheck();
