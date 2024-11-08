@@ -1,5 +1,5 @@
-/* U ovom zadatku pravimo aritmetičko kolo pomoću kojeg se dokazuje da list pripada
-Merkle Tree-ju dubine N, bez otkrivanja lista. Dakle, list, putanja i susedi se šalju
+/* U ovom zadatku pravimo aritmetičko kolo pomoću kojeg se proverava da li list pripada
+Merkle Tree-ju dubine N, bez otkrivanja vrednosti u listu. Dakle, list, putanja i susedi se šalju
 kao private input, a public input je koren stabla. Susedi predstavlja niz suseda
 koje list ima na putu do korena stabla, a putanja je niz nula i jedinica koji daje
 informaciju da li se na tom putu susedi nalaze sa leve ili desne strane
