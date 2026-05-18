@@ -42,7 +42,7 @@ odgovor <== provera1.out * provera2.out;
 }
 
 component main { public [commitment,donjaGranica, gornjaGranica] } = RangeProof(252);
-// broj je private input
+// broj i salt su privatni inputi
 
 //primer inputa:
 
