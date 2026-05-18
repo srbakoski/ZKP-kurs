@@ -1,6 +1,6 @@
-/* U ovom zadatku pravimo aritmetičko kolo pomoću kojeg se proverava da li list pripada
-Merkle Tree-ju dubine N, bez otkrivanja vrednosti u listu. Dakle, list, putanja i susedi se šalju
-kao private input, a public input je koren stabla. Susedi predstavlja niz suseda
+/* U ovom zadatku pravimo aritmetičko kolo pomoću kojeg se proverava da li heš tajne vrednosti pripada
+Merkle Tree-ju dubine N, bez otkrivanja tajne vrednosti. Dakle, tajna vrednost, putanja i susedi se šalju
+kao private input, a public input je koren stabla. "Susedi" predstavlja niz suseda
 koje list ima na putu do korena stabla, a putanja je niz nula i jedinica koji daje
 informaciju da li se na tom putu susedi nalaze sa leve ili desne strane
 (0 znači da je sused sa desne strane, a 1 da je sused sa leve strane)  */
@@ -12,7 +12,7 @@ include "circomlib/mux1.circom";
 include "circomlib/comparators.circom";
 
 template MerkleTreeMembershipProof(N) { 
-signal input list;
+signal input tajna;
 signal input putanja[N];
 signal input susedi[N]; // heševi suseda koji se nalaze na putanji od lista do korena
 signal input koren;
@@ -21,7 +21,12 @@ signal output odgovor;
 i u svakom koraku ćemo, u zavisnosti sa koje je strane sused,
  računati heš(list, sused) ili heš(sused,list), dok ne dođemo do korena.
  Kada dođemo do korena uporedićemo koren i heš koji smo dobili prolaskom kroz stablo.
- Ako se vrednosti poklapaju, onda naš list zaista pripada stablu. */
+ Ako se vrednosti poklapaju, onda heš naše tajne vrednosti zaista pripada stablu. */
+
+// prvo računamo heš tajne vrednosti
+component hash = Poseidon(1);
+hash.inputs[0] <== tajna;
+signal list <== hash.out; 
 
 component poseidons[N];  
 component multiplexers[N];
@@ -62,12 +67,12 @@ jednaki.in[1] <== hashes[N];
 odgovor <== jednaki.out;
 }
 
-component main {public [koren ]} = MerkleTreeMembershipProof(2);
+component main {public [koren]} = MerkleTreeMembershipProof(2);
 
 //primer inputa:
 
 /* INPUT = {
-"list": "9900412353875306532763997210486973311966982345069434572804920993370933366268",
+"tajna": "1003004710143",
 "putanja": ["1","1"],
 "susedi": ["14333811951799925926774885301821959013021952046626659497477564929336980550427",
 "21114081898029808037446369066386890808499219327603760814259363886440875203594"],
