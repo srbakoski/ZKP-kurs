@@ -1,4 +1,9 @@
-/* resenje i salt su private inputi igrača koji je zamislio broj,
+/* Posmatramo igru između dva igrača:
+Prvi igrač zamislja neki broj.
+Drugi igrač pokušava da pogodi taj broj.
+Želimo da napravimo ZK kolo koje proverava da li je drugi igrač pogodio broj, a da se pri tome tajni broj ne otkriva javno. 
+
+resenje i salt su private inputi igrača koji je zamislio broj,
 ali je heš(resenje,salt) public i tu vrednost zovemo resenjeCommitment.
 Da bi igrač podmetnuo lažno rešenje, morao bi da nađe vrednost salt-a tako da
 heš od lažnog rešenja i tog novog salt-a bude jednak resenjeCommitment, a to nije 
